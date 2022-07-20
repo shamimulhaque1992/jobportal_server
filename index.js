@@ -53,7 +53,7 @@ async function run() {
       const result = await jobsCollections.insertOne(newJobs);
       res.send(result);
     });
-    app.delete("/jobs/:id", async (req, res) => {
+    app.delete("/jobs/:id",verifyJWT, async (req, res) => {
       const id = req.params.id;
       console.log(id);
       const query = { _id: ObjectId(id) };
