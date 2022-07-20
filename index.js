@@ -39,7 +39,7 @@ async function run() {
     const usersCollections = client.db("jobportal").collection("users");
     console.log("database connected");
 
-    app.get("/jobs", verifyJWT, async (req, res) => {
+    app.get("/jobs",  async (req, res) => {
       const query = {};
       const authorization = req.headers.authorization;
       console.log("auth", authorization);
@@ -48,7 +48,7 @@ async function run() {
       res.send(jobs);
     });
 
-    app.post("/jobs", async (req, res) => {
+    app.post("/jobs",verifyJWT, async (req, res) => {
       const newJobs = req.body;
       const result = await jobsCollections.insertOne(newJobs);
       res.send(result);
