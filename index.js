@@ -39,17 +39,14 @@ async function run() {
     const usersCollections = client.db("jobportal").collection("users");
     console.log("database connected");
 
-
-
-    app.get("/jobs",verifyJWT, async (req, res) => {
-        const query={};
-        const authorization = req.headers.authorization;
-        console.log("auth",authorization);
-        const cursor = jobsCollections.find(query)
-        const jobs = await cursor.toArray();
-        res.send(jobs);
-    })
-
+    app.get("/jobs", verifyJWT, async (req, res) => {
+      const query = {};
+      const authorization = req.headers.authorization;
+      console.log("auth", authorization);
+      const cursor = jobsCollections.find(query);
+      const jobs = await cursor.toArray();
+      res.send(jobs);
+    });
 
     app.post("/jobs", async (req, res) => {
       const newJobs = req.body;
@@ -82,8 +79,7 @@ async function run() {
       res.send(updatedInfo);
     });
 
-
-     app.put("/user/:email", async (req, res) => {
+    app.put("/user/:email", async (req, res) => {
       const email = req.params.email;
       const user = req.body;
       const filter = { email: email };
@@ -96,17 +92,15 @@ async function run() {
         updatedDoc,
         options
       );
-      const token = jwt.sign(
-        { email: email },
-        process.env.ACCESS_TOKEN,
-        { expiresIn: "1h" }
-      );
+      const token = jwt.sign({ email: email }, process.env.ACCESS_TOKEN, {
+        expiresIn: "1h",
+      });
       res.send({ result, token });
     });
-    } finally {
+  } finally {
   }
 }
-  run().catch(console.dir);
+run().catch(console.dir);
 
 app.get("/", (req, res) => {
   res.send("Jobs portal is running");
