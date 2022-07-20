@@ -41,7 +41,7 @@ async function run() {
 
 
 
-    app.get("/jobs", async (req, res) => {
+    app.get("/jobs",verifyJWT, async (req, res) => {
         const query={};
         const authorization = req.headers.authorization;
         console.log("auth",authorization);
